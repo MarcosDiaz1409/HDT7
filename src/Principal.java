@@ -30,9 +30,10 @@ public class Principal{
             e.printStackTrace();
         }
 
-        
+        for(int i = 0; i < lineasArchivo.size(); i++) {
+            System.out.println(lineasArchivo.get(i));
+        }
 
-        
     }
 
 }

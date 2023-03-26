@@ -38,6 +38,18 @@ public class BinarySearchTree<K extends Comparable<K>, V1, V2>{
         }
     }
 
+	public TreeNode<K, V1, V2> search(K key) {
+        TreeNode<K, V1, V2> current = root;
+        while (current != null && !current.key.equals(key)) {
+            if (key.compareTo(current.key) < 0) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+        return current;
+    }
+
     public void printInOrder() {
         inOrderTraversal(root);
     }

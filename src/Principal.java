@@ -30,9 +30,9 @@ public class Principal{
             e.printStackTrace();
         }
 
-        
-        Association<String,Pair<String, String>> association = new Association<>();
-        association.buildBinarySearchTree(lineasArchivo);
+        BinarySearchTree<String, String, String> tree = new BinarySearchTree<>();
+        tree.insertAll(lineasArchivo);
+        tree.printInOrder();
 
     }
 

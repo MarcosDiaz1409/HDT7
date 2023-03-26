@@ -1,7 +1,5 @@
 import java.util.*;
 
-import javax.sound.midi.Soundbank;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -33,6 +31,8 @@ public class Principal{
             e.printStackTrace();
         }
 
+        // Crea los arboles de los tres idiomas y los imprime ya inOrder
+
         Association<String, String, String> association = new Association<>();
 
         System.out.println("\n..:: DICCIONARIO DE INGLES ::..");
@@ -49,6 +49,26 @@ public class Principal{
         association.createFrenchTree(lineasArchivo);
 
         System.out.println("\n");
+
+        System.out.println("=============================================== \n");
+
+        // Codigo que traduce la linea de texto ingresada
+
+        System.out.println(">>>> Traduccion del archivo ingresado <<<< \n");
+        // Se crea el ArrayList que almacena todas las lineas del archivo
+        ArrayList<String> lineasTrad = new ArrayList<>();
+
+        // Lee el archivo de texto y agrega todas las lineas al ArrayList anterior
+        File file1 = new File("C:/Ejemplos/traduccion.txt"); // Poner aqui la direccion del archivo de texto a utilizar
+        try {
+            try (BufferedReader br = new BufferedReader(new FileReader(file1))){
+                while(br.ready()) {
+                    lineasTrad.add(br.readLine());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

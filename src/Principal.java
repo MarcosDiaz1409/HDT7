@@ -1,4 +1,7 @@
 import java.util.*;
+
+import javax.sound.midi.Soundbank;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -30,9 +33,22 @@ public class Principal{
             e.printStackTrace();
         }
 
-        BinarySearchTree<String, String, String> tree = new BinarySearchTree<>();
-        tree.insertAll(lineasArchivo);
-        tree.printInOrder();
+        Association<String, String, String> association = new Association<>();
+
+        System.out.println("\n..:: DICCIONARIO DE INGLES ::..");
+        association.createEnglishTree(lineasArchivo);
+
+        System.out.println("\n");
+
+        System.out.println("..:: DICCIONARIO EN ESPAÑOL ::..");
+        association.createSpanishTree(lineasArchivo);
+
+        System.out.println("\n");
+
+        System.out.println("..:: DICCIONARIO EN FRANCES ::..");
+        association.createFrenchTree(lineasArchivo);
+
+        System.out.println("\n");
 
     }
 

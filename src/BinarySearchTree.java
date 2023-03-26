@@ -22,15 +22,15 @@ public class BinarySearchTree<K extends Comparable<K>, V1, V2>{
             while (true) {
                 parent = current;
                 if (key.compareTo(current.key) < 0) {
-                    current = current.leftChild;
+                    current = current.left;
                     if (current == null) {
-                        parent.leftChild = newNode;
+                        parent.left = newNode;
                         return;
                     }
                 } else {
-                    current = current.rightChild;
+                    current = current.right;
                     if (current == null) {
-                        parent.rightChild = newNode;
+                        parent.right = newNode;
                         return;
                     }
                 }
@@ -44,9 +44,9 @@ public class BinarySearchTree<K extends Comparable<K>, V1, V2>{
 
     private void inOrderTraversal(TreeNode<K, V1, V2> node) {
         if (node != null) {
-            inOrderTraversal(node.leftChild);
+            inOrderTraversal(node.left);
             System.out.println(node.key + ": " + node.value1 + ", " + node.value2);
-            inOrderTraversal(node.rightChild);
+            inOrderTraversal(node.right);
         }
     }
 

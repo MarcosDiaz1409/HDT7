@@ -11,15 +11,15 @@ public class TreeNode<K extends Comparable<K>,V1, V2>{
 	K key;
 	V1 value1;
 	V2 value2;
-	TreeNode<K, V1, V2> leftChild;
-	TreeNode<K, V1, V2> rightChild;
+	TreeNode<K, V1, V2> left;
+	TreeNode<K, V1, V2> right;
 
 	public TreeNode(K key, V1 value1, V2 value2) {
 		this.key = key;
 		this.value1 = value1;
 		this.value2 = value2;
-        leftChild = null;
-        rightChild = null;
+        left = null;
+        right = null;
 	}
 	
 

@@ -6,14 +6,14 @@
  * NOTA: El codigo utilizado en esta clase proviene del repositorio del profesor. Usuario: malonso-uvg/uvg2023ed40/02_ADT_Ejemplos
  */
 
-public class TreeNode<K,V>{
+public class TreeNode<K extends Comparable<K>,V>{
 
-    private K key;
-	private V value;
+    public K key;
+	public V value;
 	
-	private TreeNode<K,V> left;
-	private TreeNode<K,V> right;
-	private TreeNode<K,V> parent;
+	public TreeNode<K,V> left;
+	public TreeNode<K,V> right;
+	public TreeNode<K,V> parent;
 	
 	public TreeNode(K _key, V _value) {
 		setKey(_key);

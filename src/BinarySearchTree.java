@@ -1,4 +1,4 @@
-import java.util.Comparator;
+import java.util.*;
 
 /*
  * Marcos Diaz (221102)
@@ -8,109 +8,76 @@ import java.util.Comparator;
  * NOTA: El codigo utilizado en esta clase proviene del repositorio del profesor. Usuario: malonso-uvg/uvg2023ed40/02_ADT_Ejemplos
  */
 
-public class BinarySearchTree<K,V>{
+public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearchTree<K,V>{
 
-    private TreeNode<K, V> root;
-	private Comparator<K> keyComparator;
-	private IBinarySearchTree<K, V> keyGenerator;
-	private boolean isEmpty;
-	private int count;
+	private TreeNode<K, V> root;
 
-    public BinarySearchTree(Comparator<K> _keyComparator, IBinarySearchTree<K, V> _keyGenerator) {
-		root = null;
-		keyComparator = _keyComparator;
-		keyGenerator = _keyGenerator;
-		isEmpty = true;
-		count = 0;
-	}
+    public BinarySearchTree() {
+        root = null;
+    }
 
-    public void add(V value) {
-		TreeNode<K, V> newNode = new TreeNode<K, V>((K)keyGenerator.getKeyFromValue(value), value);
-		if (isEmpty) { //Es el primer elemento que se inserta
+    public TreeNode<K, V> getRoot() {
+        return root;
+    }
+
+    public void insert(K key, V value) {
+		// Creamos el nuevo nodo
+		TreeNode<K, V> newNode = new TreeNode<>(key, value);
+		
+		// Si el árbol está vacío, el nuevo nodo es la raíz
+		if(root == null) {
 			root = newNode;
-			isEmpty = false;
-			count++;
-		} else { //Ya hay elementos insertados
-			internalInsert(root, newNode);
+			return;
 		}
-	}
-
-    public V search(K key) {
-		return (V) internalSearch(root, key);
-	}
-
-    private V internalSearch(TreeNode<K, V> actual, K key) {
 		
-		if (actual != null) {
-			
-			int result = keyComparator.compare(actual.getKey(), key);
-			
-			// SI result es 0 entonces son iguales
-			if (result == 0) {
-				return actual.getValue();
-			} else if (result > 0) {
-				return (V) internalSearch(actual.getLeft(), key);
-			}else {
-				return (V) internalSearch(actual.getRight(), key);
+		// Buscamos la posición para insertar el nuevo nodo
+		TreeNode<K, V> current = root;
+		TreeNode<K, V> parent = null;
+		while(current != null) {
+			parent = current;
+			if(key.compareTo(current.getKey()) < 0) {
+				current = current.getLeft();
+			} else if(key.compareTo(current.getKey()) > 0) {
+				current = current.getRight();
+			} else {
+				// Si la llave ya existe, se actualiza el valor
+				current.setValue(value);
+				return;
 			}
-			
-			
+		}
+		
+		// Insertamos el nuevo nodo como hijo del nodo padre
+		if(key.compareTo(parent.getKey()) < 0) {
+			parent.setLeft(newNode);
+			newNode.setParent(parent);
 		} else {
-			return null;
-		}
-		
-		
-	}
-
-    public boolean isEmpty() {
-		return isEmpty;
-	}
-
-    private void internalInsert(TreeNode<K, V> actualNode, TreeNode<K, V> newNode) {
-		int result = keyComparator.compare(actualNode.getKey(), newNode.getKey());
-		//si actual es mayor entonces da un nuemero posito
-		//si actual es menor entonces da un numero negativo
-		//si son iguales da 0
-		
-		if (result > 0) { //Inserto el nuevo a la izquierda porque es menor
-			if (actualNode.getLeft() == null) { //La izquierda esta vacia
-				actualNode.setLeft(newNode);
-				newNode.setParent(actualNode);
-				count++;
-			} else { //Existe nodo en la izquierda entonces ahora nuevo se compara con este
-				internalInsert(actualNode.getLeft() ,newNode);
-			}
-		} else if (result < 0) { //Inserto el nuevo a la derecha porque es mayor
-			if (actualNode.getRight() == null) { //La derecha esta vacia
-				actualNode.setRight(newNode);
-				newNode.setParent(actualNode);
-				count++;
-			} else { //Existe nodo en la derecha entonces ahora nuevo se compara con la derecha
-				internalInsert(actualNode.getRight() ,newNode);
-			}
+			parent.setRight(newNode);
+			newNode.setParent(parent);
 		}
 	}
 
-    public void InOrderTraversal(ITreeTraversal<K, V> visitador) {
-		internalInOrder(root, visitador);
+    public TreeNode<K, V> find(K key) {
+        TreeNode<K, V> currentNode = root;
+        while (currentNode != null && key.compareTo(currentNode.getKey()) != 0) {
+            if (key.compareTo(currentNode.getKey()) < 0) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+            }
+        }
+        return currentNode;
+    }
+
+	public void printTree() {
+		printTree(root);
 	}
 	
-	private void internalInOrder(TreeNode<K, V> actual, ITreeTraversal<K, V> visitador) {
-		
-		if (actual != null) {
-			
-			if (actual.getLeft() != null) {
-				internalInOrder(actual.getLeft(), visitador);
-			}
-			
-			visitador.visit(actual);
-			
-			if (actual.getRight() != null) {
-				internalInOrder(actual.getRight(), visitador);
-			}
-			
+	private void printTree(TreeNode<K,V> node) {
+		if (node != null) {
+			printTree(node.left);
+			System.out.println(node.key + ": " + node.value);
+			printTree(node.right);
 		}
-		
 	}
 
 }
